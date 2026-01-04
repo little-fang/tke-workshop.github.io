@@ -67,7 +67,7 @@ theme:
 
 # ==================== 导航结构 ====================
 nav:
-  - 首页: index.md
+  - TKE Workshop: index.md
   
   - 基础操作:
     - basics/index.md

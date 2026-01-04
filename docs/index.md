@@ -23,6 +23,33 @@ article.md-content__inner::before { display: none !important; }
 .md-content__button { display: none !important; }
 .md-source-file { display: none !important; }
 
+/* ===== 导航栏优化：单行布局 + 更明显字体 ===== */
+/* 隐藏顶部 header 第一行（logo + site_name） */
+.md-header__title { display: none !important; }
+
+/* 导航栏字体加粗加大 */
+.md-tabs__link {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+}
+
+/* 搜索框和图标在同一行 */
+.md-header__inner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+/* 调整 header 高度 */
+.md-header { min-height: auto !important; }
+
+/* 让 tabs 和 header 在视觉上合并 */
+.md-tabs {
+  background: var(--md-primary-fg-color) !important;
+  border: none !important;
+}
+
 /* Hero 全屏区块 */
 .tx-hero {
   width: 100vw;
@@ -165,6 +192,20 @@ article.md-content__inner::before { display: none !important; }
   max-width: 1100px;
   margin: 0 auto;
   padding: 4rem 2rem;
+  position: relative;
+}
+
+/* 模块分界线 */
+.tx-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #22d3ee, #818cf8);
+  border-radius: 2px;
 }
 
 .tx-section__title {
@@ -233,6 +274,20 @@ article.md-content__inner::before { display: none !important; }
   margin-left: calc(50% - 50vw);
   background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
   padding: 4rem 2rem;
+  position: relative;
+}
+
+/* 模块区块顶部分界线 */
+.tx-modules-band::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #22d3ee, #818cf8);
+  border-radius: 2px;
 }
 
 [data-md-color-scheme="slate"] .tx-modules-band {
