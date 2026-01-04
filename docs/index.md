@@ -12,6 +12,16 @@ hide:
 .md-main__inner { padding-top: 0 !important; }
 .md-content__inner { margin: 0 !important; padding: 0 !important; max-width: none !important; }
 
+/* 隐藏首页默认的白色内容区域背景 */
+.md-content { background: transparent !important; }
+.md-main { background: transparent !important; }
+.md-container { background: #0f172a !important; }
+article.md-content__inner::before { display: none !important; }
+
+/* 隐藏首页的标题栏（白框区域） */
+.md-content__inner > h1:first-child { display: none !important; }
+.md-content__button { display: none !important; }
+
 /* Hero 全屏区块 */
 .tx-hero {
   width: 100vw;
