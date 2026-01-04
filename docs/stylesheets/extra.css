@@ -1,118 +1,75 @@
 /* ============================================================
-   GKE AI Labs 风格全量定义
+   TKE Workshop 极简现代风样式
    ============================================================ */
 
-/* 1. 隐藏原生 Tabs 栏 */
-.md-tabs {
-  display: none !important;
+:root {
+  --md-primary-fg-color: #ffffff;
+  --md-primary-fg-color--dark: #ffffff;
 }
 
-/* 2. Header 基础样式：白色背景，固定高度 */
+/* 1. Header 样式：纯白极简 */
 .md-header {
   background-color: #ffffff !important;
   color: #202124 !important;
-  box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15) !important;
-  transition: background-color 250ms !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  box-shadow: none !important;
 }
 
-/* 深色模式适配 */
 [data-md-color-scheme="slate"] .md-header {
-  background-color: #202124 !important;
+  background-color: #1a1a1a !important;
   color: #e8eaed !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+  border-bottom: 1px solid #333 !important;
 }
 
-/* 3. 内部布局：对齐 */
-.md-header__inner {
-  height: 64px !important;
-  display: flex !important;
-  align-items: center !important;
-  padding: 0 1.5rem !important;
-  max-width: 100% !important;
+/* Header 文字颜色 */
+.md-header__title, .md-header__button {
+  color: #202124 !important;
 }
 
-/* 4. Logo 样式 */
-.md-header__button.md-logo {
-  margin: 0 0.5rem 0 0 !important;
-  color: #4285f4 !important; /* GKE 蓝 */
-}
-.md-header__button.md-logo svg {
-  width: 28px !important;
-  height: 28px !important;
+[data-md-color-scheme="slate"] .md-header__title, 
+[data-md-color-scheme="slate"] .md-header__button {
+  color: #e8eaed !important;
 }
 
-/* 5. 标题与内联导航容器 */
-.md-header__title {
-  display: block !important;
-  flex: 1 !important;
-  font-size: 1.1rem !important;
-  font-weight: 500 !important;
+/* 2. 导航标签 (Tabs) 样式：紧跟在 Header 下方 */
+.md-tabs {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f0f0f0 !important;
 }
 
-.md-header__ellipsis {
-  display: flex !important;
-  align-items: center !important;
-  gap: 2rem !important;
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #1a1a1a !important;
+  border-bottom: 1px solid #222 !important;
 }
 
-/* 6. 内联导航链接样式 */
-.md-header__inline-nav {
-  display: flex !important;
-  gap: 1.5rem !important;
-  margin-left: 1rem !important;
-}
-
-.md-header__link {
+.md-tabs__link {
   color: #5f6368 !important;
-  font-size: 0.85rem !important;
+  font-size: 0.8rem !important;
   font-weight: 500 !important;
-  text-decoration: none !important;
-  transition: color 0.2s !important;
-  white-space: nowrap !important;
+  opacity: 1 !important;
+  padding-top: 0.8rem !important;
+  transition: color 0.2s, border-color 0.2s !important;
 }
 
-[data-md-color-scheme="slate"] .md-header__link {
+[data-md-color-scheme="slate"] .md-tabs__link {
   color: #9aa0a6 !important;
 }
 
-.md-header__link:hover {
+.md-tabs__link--active, .md-tabs__link:hover {
   color: #1a73e8 !important;
 }
 
-.md-header__link--active {
-  color: #1a73e8 !important;
-  border-bottom: 2px solid #1a73e8 !important;
-  padding-bottom: 20px !important;
-  margin-bottom: -20px !important;
-}
-
-/* 7. 搜索框改造：长条圆角风格 */
-.md-search {
-  padding: 0 !important;
-  margin-left: 1rem !important;
-}
-
+/* 3. 搜索框美化：圆角 */
 .md-search__form {
   background-color: #f1f3f4 !important;
   border-radius: 8px !important;
-  height: 40px !important;
-  width: 350px !important; /* 加长搜索框 */
-  border: 1px solid transparent !important;
-  transition: background-color 0.2s, width 0.2s !important;
 }
 
 [data-md-color-scheme="slate"] .md-search__form {
-  background-color: #303134 !important;
-}
-
-.md-search__form:hover {
-  background-color: #e8eaed !important;
+  background-color: #2a2a2a !important;
 }
 
 .md-search__input {
-  padding-left: 2.5rem !important;
-  height: 40px !important;
-  font-size: 0.85rem !important;
   color: #202124 !important;
 }
 
@@ -120,43 +77,7 @@
   color: #e8eaed !important;
 }
 
-/* 搜索图标位置 */
-.md-search__icon {
-  top: 8px !important;
-  left: 10px !important;
-}
-
-/* 8. 右侧按钮（GitHub, 主题切换等） */
-.md-header__tools {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.5rem !important;
-}
-
-.md-header__button.md-icon {
-  color: #5f6368 !important;
-}
-
-[data-md-color-scheme="slate"] .md-header__button.md-icon {
-  color: #9aa0a6 !important;
-}
-
-/* 隐藏侧边栏按钮（桌面端） */
-@media screen and (min-width: 76.25em) {
-  [for="__drawer"] {
-    display: none !important;
-  }
-}
-
-/* 移动端适配：隐藏内联导航，显示抽屉按钮 */
-@media screen and (max-width: 76.25em) {
-  .md-header__inline-nav {
-    display: none !important;
-  }
-  .md-search__form {
-    width: 200px !important;
-  }
-  [for="__drawer"] {
-    display: block !important;
-  }
+/* 4. Logo 颜色 */
+.md-logo svg {
+  fill: #1a73e8 !important;
 }
