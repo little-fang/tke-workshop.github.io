@@ -137,39 +137,41 @@
 }
 
 /* 6. 调整 Header 元素顺序：主题切换放到搜索框后 */
-.md-header__inner {
+nav.md-header__inner.md-grid {
   display: flex !important;
   flex-direction: row !important;
+  flex-wrap: nowrap !important;
 }
 
-/* 使用 flexbox order 调整顺序 */
-.md-header__button[for="__drawer"] {
-  order: 1 !important;  /* 汉堡菜单 */
+/* Logo */
+nav.md-header__inner > a.md-logo {
+  order: 1 !important;
 }
 
-.md-header__button--logo,
-.md-header__topic {
-  order: 2 !important;  /* Logo 和标题 */
+/* 汉堡菜单 */
+nav.md-header__inner > label.md-header__button {
+  order: 2 !important;
 }
 
-.md-header__title {
+/* 标题 */
+nav.md-header__inner > .md-header__title {
   order: 3 !important;
+  flex-grow: 1 !important;
 }
 
-/* 搜索框 */
-.md-search {
+/* 搜索框 - 放在右侧区域的第一个 */
+nav.md-header__inner > .md-search {
   order: 10 !important;
-  margin-left: auto !important;  /* 推到右侧 */
 }
 
-/* 主题切换按钮（小太阳）放在搜索框后 */
-form.md-header__option {
+/* 主题切换按钮（小太阳）- 放在搜索框后 */
+nav.md-header__inner > form.md-header__option {
   order: 11 !important;
-  margin-left: 8px !important;
+  margin-left: 0.4rem !important;
 }
 
-/* GitHub 图标放最后 */
-.md-header__source {
+/* GitHub 图标 - 放最后 */
+nav.md-header__inner > .md-header__source {
   order: 12 !important;
-  margin-left: 8px !important;
+  margin-left: 0.4rem !important;
 }
