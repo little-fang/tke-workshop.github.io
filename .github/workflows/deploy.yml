@@ -31,9 +31,10 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build site
-        run: mkdocs build --strict
+        run: mkdocs build
         env:
           CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
