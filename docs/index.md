@@ -217,37 +217,38 @@ article.md-content__inner::before { display: none !important; }
   height: auto;
 }
 
-/* 价值主张区块 */
+/* 价值主张区块 - Google 风格分界 */
 .tx-section {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem;
   position: relative;
+  background: var(--md-default-bg-color);
 }
 
-/* 模块分界线 */
+/* 区块顶部边框分界线 */
 .tx-section::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #22d3ee, #818cf8);
-  border-radius: 2px;
+  left: 2rem;
+  right: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--md-default-fg-color--lightest), transparent);
 }
 
 .tx-section__title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  color: var(--md-default-fg-color);
 }
 
 .tx-section__desc {
   color: var(--md-default-fg-color--light);
-  margin: 0 0 2rem 0;
-  line-height: 1.6;
+  margin: 0 0 2.5rem 0;
+  line-height: 1.7;
+  font-size: 1.1rem;
 }
 
 .tx-grid {
@@ -263,14 +264,15 @@ article.md-content__inner::before { display: none !important; }
 .tx-card {
   background: var(--md-default-bg-color);
   border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .tx-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  border-color: #22d3ee;
 }
 
 .tx-card__icon {
@@ -298,30 +300,21 @@ article.md-content__inner::before { display: none !important; }
   font-size: 0.95rem;
 }
 
-/* 模块入口全宽区块 */
+/* 模块入口全宽区块 - 明显背景差异 */
 .tx-modules-band {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
-  padding: 4rem 2rem;
+  background: #f8fafc;
+  padding: 5rem 2rem;
   position: relative;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-/* 模块区块顶部分界线 */
-.tx-modules-band::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #22d3ee, #818cf8);
-  border-radius: 2px;
-}
-
+/* 暗色模式 */
 [data-md-color-scheme="slate"] .tx-modules-band {
-  background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%);
+  background: #1e293b;
+  border-color: #334155;
 }
 
 .tx-modules-band__inner {
@@ -346,14 +339,15 @@ article.md-content__inner::before { display: none !important; }
 .tx-module {
   background: var(--md-default-bg-color);
   border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 16px;
+  padding: 1.75rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .tx-module:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  border-color: #22d3ee;
 }
 
 .tx-module__header {
