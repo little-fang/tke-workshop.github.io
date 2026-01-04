@@ -18,9 +18,10 @@ hide:
 .md-container { background: #0f172a !important; }
 article.md-content__inner::before { display: none !important; }
 
-/* 隐藏首页的标题栏（白框区域） */
+/* 隐藏首页的标题和编辑按钮 */
 .md-content__inner > h1:first-child { display: none !important; }
 .md-content__button { display: none !important; }
+.md-source-file { display: none !important; }
 
 /* Hero 全屏区块 */
 .tx-hero {
