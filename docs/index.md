@@ -15,8 +15,11 @@ hide:
 /* 隐藏首页默认的白色内容区域背景 */
 .md-content { background: transparent !important; }
 .md-main { background: transparent !important; }
-.md-container { background: #0f172a !important; }
+.md-container { background: #f8fafc !important; }
 article.md-content__inner::before { display: none !important; }
+
+/* 暗色模式整体背景 */
+[data-md-color-scheme="slate"] .md-container { background: #1e293b !important; }
 
 /* 隐藏首页的标题和编辑按钮 */
 .md-content__inner > h1:first-child { display: none !important; }
@@ -217,25 +220,16 @@ article.md-content__inner::before { display: none !important; }
   height: auto;
 }
 
-/* 价值主张区块 - Google 风格分界 */
+/* 价值主张区块 - 白色卡片区 */
 .tx-section {
   max-width: 1100px;
   margin: 0 auto;
   padding: 5rem 2rem;
   position: relative;
-  background: var(--md-default-bg-color);
+  background: transparent;
 }
 
-/* 区块顶部边框分界线 */
-.tx-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 2rem;
-  right: 2rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--md-default-fg-color--lightest), transparent);
-}
+/* 移除分界线，用背景色区分 */
 
 .tx-section__title {
   font-size: 2rem;
@@ -262,17 +256,23 @@ article.md-content__inner::before { display: none !important; }
 }
 
 .tx-card {
-  background: var(--md-default-bg-color);
-  border: 1px solid var(--md-default-fg-color--lightest);
+  background: #fff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 2rem;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .tx-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   border-color: #22d3ee;
+}
+
+[data-md-color-scheme="slate"] .tx-card {
+  background: #334155;
+  border-color: #475569;
 }
 
 .tx-card__icon {
@@ -300,21 +300,18 @@ article.md-content__inner::before { display: none !important; }
   font-size: 0.95rem;
 }
 
-/* 模块入口全宽区块 - 明显背景差异 */
+/* 模块入口全宽区块 - 与整体背景一致 */
 .tx-modules-band {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  background: #f8fafc;
-  padding: 5rem 2rem;
+  background: transparent;
+  padding: 0 2rem 5rem;
   position: relative;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
 }
 
 /* 暗色模式 */
 [data-md-color-scheme="slate"] .tx-modules-band {
-  background: #1e293b;
-  border-color: #334155;
+  background: transparent;
 }
 
 .tx-modules-band__inner {
@@ -337,17 +334,23 @@ article.md-content__inner::before { display: none !important; }
 }
 
 .tx-module {
-  background: var(--md-default-bg-color);
-  border: 1px solid var(--md-default-fg-color--lightest);
+  background: #fff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 1.75rem;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .tx-module:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.12);
   border-color: #22d3ee;
+}
+
+[data-md-color-scheme="slate"] .tx-module {
+  background: #334155;
+  border-color: #475569;
 }
 
 .tx-module__header {
