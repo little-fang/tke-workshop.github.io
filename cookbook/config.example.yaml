@@ -1,0 +1,45 @@
+# TKE Workshop Cookbook 配置文件模板
+# 复制此文件为 config.yaml 并填入实际值
+
+# 腾讯云 API 认证信息
+tencent_cloud:
+  secret_id: "YOUR_SECRET_ID_HERE"           # 腾讯云 SecretId
+  secret_key: "YOUR_SECRET_KEY_HERE"         # 腾讯云 SecretKey
+  region: "ap-guangzhou"                      # 默认地域
+
+# TKE 集群配置
+cluster:
+  cluster_id: "cls-xxxxxxxx"                  # 集群 ID (可选,用于已有集群)
+  vpc_id: "vpc-xxxxxxxx"                      # VPC ID
+  subnet_id: "subnet-xxxxxxxx"                # 子网 ID
+  security_group_id: "sg-xxxxxxxx"            # 安全组 ID
+
+# Kubernetes 配置
+kubeconfig:
+  path: "~/.kube/config"                      # kubeconfig 文件路径
+  context: ""                                 # 上下文名称 (留空使用当前上下文)
+
+# 节点配置默认值
+node:
+  instance_type: "SA2.MEDIUM4"                # 默认机型 (2核4G)
+  system_disk_size: 50                        # 系统盘大小 GB
+  data_disk_size: 100                         # 数据盘大小 GB
+  zone: "ap-guangzhou-3"                      # 可用区
+
+# 日志配置
+logging:
+  level: "INFO"                               # 日志级别: DEBUG, INFO, WARNING, ERROR
+  file: "cookbook.log"                        # 日志文件路径
+  console: true                               # 是否输出到控制台
+
+# 超时配置
+timeout:
+  cluster_create: 1800                        # 集群创建超时 (秒)
+  node_add: 600                               # 节点添加超时 (秒)
+  deployment_ready: 300                       # Deployment 就绪超时 (秒)
+
+# 重试配置
+retry:
+  max_attempts: 3                             # 最大重试次数
+  delay: 5                                    # 重试间隔 (秒)
+  backoff: 2                                  # 退避倍数

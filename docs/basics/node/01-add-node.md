@@ -96,6 +96,65 @@
 
 ### Step 2: 调用 CreateClusterInstances API
 
+**使用 cURL (HTTP 直接调用)**:
+
+```bash
+curl -X POST "https://tke.tencentcloudapi.com/" \
+  -H "Content-Type: application/json" \
+  -H "X-TC-Action: CreateClusterInstances" \
+  -H "X-TC-Version: 2018-05-25" \
+  -H "X-TC-Region: ap-guangzhou" \
+  -H "X-TC-Timestamp: $(date +%s)" \
+  -H "Authorization: TC3-HMAC-SHA256 Credential=<SecretId>/..." \
+  -d '{
+    "ClusterId": "cls-xxxxxxxx",
+    "RunInstancesForNode": [
+      {
+        "InstanceType": "SA2.MEDIUM4",
+        "SystemDisk": {
+          "DiskType": "CLOUD_PREMIUM",
+          "DiskSize": 50
+        },
+        "DataDisks": [
+          {
+            "DiskType": "CLOUD_PREMIUM",
+            "DiskSize": 100
+          }
+        ],
+        "InternetAccessible": {
+          "InternetMaxBandwidthOut": 5
+        },
+        "InstanceCount": 3,
+        "Zone": "ap-guangzhou-3",
+        "SecurityGroupIds": ["sg-xxxxxxxx"]
+      }
+    ],
+    "InstanceAdvancedSettings": {
+      "Labels": [
+        {
+          "Name": "env",
+          "Value": "production"
+        }
+      ]
+    }
+  }'
+```
+
+**响应示例**:
+
+```json
+{
+  "Response": {
+    "InstanceIdSet": [
+      "ins-xxxxxxx1",
+      "ins-xxxxxxx2",
+      "ins-xxxxxxx3"
+    ],
+    "RequestId": "12345678-1234-1234-1234-123456789012"
+  }
+}
+```
+
 **使用腾讯云 CLI**:
 
 ```bash

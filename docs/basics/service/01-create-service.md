@@ -95,6 +95,119 @@ my-app-svc   ClusterIP   10.96.123.45    <none>        80/TCP    1m
 
 ---
 
+## 使用 Kubernetes API (cURL) 创建 Service
+
+### 示例: 创建 ClusterIP Service
+
+```bash
+# 获取 API Server 和 Token
+APISERVER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+TOKEN=$(kubectl get secret $(kubectl get sa default -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' | base64 --decode)
+
+# 调用 API 创建 Service
+curl -k -X POST "$APISERVER/api/v1/namespaces/default/services" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "my-app-svc",
+      "namespace": "default",
+      "labels": {
+        "app": "my-app"
+      }
+    },
+    "spec": {
+      "type": "ClusterIP",
+      "selector": {
+        "app": "my-app"
+      },
+      "ports": [
+        {
+          "name": "http",
+          "protocol": "TCP",
+          "port": 80,
+          "targetPort": 8080
+        }
+      ],
+      "sessionAffinity": "None"
+    }
+  }'
+```
+
+**响应示例**:
+
+```json
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "my-app-svc",
+    "namespace": "default",
+    "uid": "12345678-1234-1234-1234-123456789012",
+    "resourceVersion": "123456",
+    "creationTimestamp": "2026-01-07T10:00:00Z"
+  },
+  "spec": {
+    "ports": [
+      {
+        "name": "http",
+        "protocol": "TCP",
+        "port": 80,
+        "targetPort": 8080
+      }
+    ],
+    "selector": {
+      "app": "my-app"
+    },
+    "clusterIP": "10.96.123.45",
+    "type": "ClusterIP",
+    "sessionAffinity": "None"
+  },
+  "status": {
+    "loadBalancer": {}
+  }
+}
+```
+
+### 示例: 创建 LoadBalancer Service
+
+```bash
+curl -k -X POST "$APISERVER/api/v1/namespaces/default/services" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+      "name": "my-app-lb-public",
+      "namespace": "default",
+      "annotations": {
+        "service.kubernetes.io/qcloud-loadbalancer-internet-charge-type": "TRAFFIC_POSTPAID_BY_HOUR",
+        "service.kubernetes.io/qcloud-loadbalancer-internet-max-bandwidth-out": "10"
+      }
+    },
+    "spec": {
+      "type": "LoadBalancer",
+      "selector": {
+        "app": "my-app"
+      },
+      "ports": [
+        {
+          "name": "http",
+          "protocol": "TCP",
+          "port": 80,
+          "targetPort": 8080
+        }
+      ],
+      "externalTrafficPolicy": "Cluster"
+    }
+  }'
+```
+
+---
+
 ## 方式二: 创建 NodePort Service
 
 ### Step 1: 准备 YAML 配置

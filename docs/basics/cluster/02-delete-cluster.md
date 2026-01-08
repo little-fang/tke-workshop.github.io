@@ -70,6 +70,42 @@ tccli tke DisableClusterDeletionProtection \
 
 调用 DeleteCluster API:
 
+**使用 cURL (HTTP 直接调用)**:
+
+```bash
+curl -X POST "https://tke.tencentcloudapi.com/" \
+  -H "Content-Type: application/json" \
+  -H "X-TC-Action: DeleteCluster" \
+  -H "X-TC-Version: 2018-05-25" \
+  -H "X-TC-Region: ap-guangzhou" \
+  -H "X-TC-Timestamp: $(date +%s)" \
+  -H "Authorization: TC3-HMAC-SHA256 Credential=<SecretId>/..." \
+  -d '{
+    "ClusterId": "cls-xxxxxxxx",
+    "InstanceDeleteMode": "terminate",
+    "ResourceDeleteOptions": [
+      {
+        "ResourceType": "CBS",
+        "DeleteMode": "terminate"
+      },
+      {
+        "ResourceType": "CLB",
+        "DeleteMode": "terminate"
+      }
+    ]
+  }'
+```
+
+**响应示例**:
+
+```json
+{
+  "Response": {
+    "RequestId": "12345678-1234-1234-1234-123456789012"
+  }
+}
+```
+
 **使用腾讯云 CLI**:
 
 ```bash
