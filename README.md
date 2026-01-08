@@ -11,12 +11,100 @@ Hands-on labs for Tencent Kubernetes Engine (TKE)
 
 ---
 
+## 🤖 Agent-First Design
+
+This documentation is **designed for AI Agents** (like Claude, GPT-4, etc.) to understand and execute TKE operations autonomously. Each document follows a structured format optimized for machine parsing and human readability.
+
+### Why Agent-First?
+
+Modern cloud operations increasingly rely on AI Agents for automation, troubleshooting, and infrastructure management. Traditional documentation is often:
+- ❌ Unstructured and hard to parse
+- ❌ Missing critical API parameters
+- ❌ Lacking executable code examples
+- ❌ Unclear about verification steps
+
+Our **Agent-First** approach ensures:
+- ✅ **Structured Metadata** — Every doc has machine-readable headers (API version, prerequisites, agent-friendliness score)
+- ✅ **Complete API Tables** — Full parameter specifications with types, defaults, and constraints
+- ✅ **Multi-Format Examples** — cURL, SDK (Python/Go), kubectl, and declarative YAML
+- ✅ **Executable Cookbook** — Ready-to-run scripts in `cookbook/` directory
+- ✅ **Clear Verification** — Step-by-step validation procedures
+- ✅ **Error Handling** — Common errors with solutions and troubleshooting flows
+
+### How to Use with AI Agents
+
+**For Developers**:
+```prompt
+Please create a TKE cluster using the documentation at:
+https://tke-workshop.github.io/basics/cluster/01-create-cluster/
+
+Cluster requirements:
+- Region: ap-guangzhou
+- K8s version: 1.28.3
+- 3 nodes (SA2.MEDIUM4)
+```
+
+**For Operations**:
+```prompt
+Deploy a microservice to my TKE cluster following best practices.
+Reference: https://tke-workshop.github.io/basics/workload/01-create-deployment/
+```
+
+**For Automation**:
+```python
+# Use cookbook scripts directly
+from cookbook.cluster import create_cluster
+cluster_id = create_cluster.main(name="prod", region="ap-guangzhou")
+```
+
+### Document Structure Standards
+
+Each operational document follows this template:
+
+```markdown
+# Document Title
+
+## 文档元信息
+- API Version: 2018-05-25
+- Agent 友好度: ⭐⭐⭐⭐⭐
+- 适用集群版本: All
+
+## 功能概述
+[Clear task objective]
+
+## 前置条件
+- [ ] Checklist format
+
+## API 参数表
+| Parameter | Required | Type | Description | Example |
+
+## 操作步骤
+### cURL Example
+### SDK Example (Python/Go)
+### kubectl/YAML Example
+
+## 验证步骤
+[Step-by-step validation]
+
+## 异常处理
+| Error Code | Cause | Solution |
+
+## Agent Prompt 模板
+[Copy-paste prompts for common scenarios]
+
+## Cookbook 示例
+[Link to executable script]
+```
+
+---
+
 ## Principles
 
-- **Modular** — Independent modules, each completable in 30-60 minutes
-- **Unified Sample App** — Consistent microservices demo across all modules
-- **TKE Focused** — Best practices specific to Tencent Kubernetes Engine
-- **Community Driven** — Open source, contributions welcome
+- **🤖 Agent-First** — Optimized for AI Agent understanding and execution
+- **📦 Executable** — Every operation has runnable code in `cookbook/`
+- **🔄 Modular** — Independent modules, each completable in 30-60 minutes
+- **🎯 TKE Focused** — Best practices specific to Tencent Kubernetes Engine
+- **🌐 Community Driven** — Open source, contributions welcome
 
 ## Modules
 
@@ -31,6 +119,8 @@ Hands-on labs for Tencent Kubernetes Engine (TKE)
 | **Control Plane** | Cluster upgrades, High availability |
 
 ## Quick Start
+
+### For Documentation
 
 ```bash
 # Clone
@@ -47,6 +137,34 @@ mkdocs serve
 # Open http://127.0.0.1:8000
 ```
 
+### For Cookbook (Executable Scripts)
+
+```bash
+# Navigate to cookbook
+cd cookbook
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure API credentials
+cp config.example.yaml config.yaml
+vim config.yaml  # Fill in your SecretId and SecretKey
+
+# Run example: Create a TKE cluster
+python3 cluster/create_cluster.py \
+  --cluster-name my-cluster \
+  --region ap-guangzhou \
+  --wait
+
+# Run example: Deploy Nginx
+python3 workload/deploy_nginx.py \
+  --replicas 3 \
+  --expose \
+  --service-type LoadBalancer
+```
+
+See [Cookbook README](cookbook/README.md) for more examples.
+
 ## Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
@@ -57,17 +175,27 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ```
 tke-workshop.github.io/
-├── docs/                 # Documentation content
-│   ├── index.md         # Homepage
-│   ├── basics/          # Getting started
-│   ├── networking/      # Networking module
-│   ├── observability/   # Observability module
-│   ├── security/        # Security module
-│   ├── ai-ml/           # AI/ML module
-│   ├── data/            # Data module
-│   └── control-plane/   # Control plane module
+├── docs/                 # 📚 Documentation content
+│   ├── index.md         # Homepage with Agent-First intro
+│   ├── basics/          # Getting started (cluster, node, workload)
+│   ├── networking/      # Networking module (service, ingress)
+│   ├── observability/   # Observability module (monitoring, logging)
+│   ├── security/        # Security module (RBAC, policies)
+│   ├── ai-ml/           # AI/ML module (GPU scheduling)
+│   ├── data/            # Data module (storage, databases)
+│   └── control-plane/   # Control plane module (upgrades, HA)
+├── cookbook/            # 🍳 Executable scripts (Agent-ready)
+│   ├── cluster/         # Cluster operations (create, delete)
+│   ├── node/            # Node management (add, remove)
+│   ├── workload/        # Workload deployment (Nginx, microservices)
+│   ├── service/         # Service creation (ClusterIP, LoadBalancer)
+│   ├── scenarios/       # Complete scenarios (blue-green, canary)
+│   ├── common/          # Shared utilities (auth, logger)
+│   ├── requirements.txt # Python dependencies
+│   └── config.example.yaml  # Configuration template
 ├── mkdocs.yml           # Site configuration
-└── requirements.txt     # Python dependencies
+├── CODEBUDDY.md         # AI Agent development guide
+└── requirements.txt     # Documentation dependencies
 ```
 
 ## License

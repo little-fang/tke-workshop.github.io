@@ -139,7 +139,129 @@ kubectl describe deployment nginx-deployment
 
 ---
 
-### 方式 2: 使用 kubectl 命令行（快速创建）
+### 方式 2: 使用 Kubernetes API (cURL)
+
+#### 直接调用 Kubernetes API 创建 Deployment
+
+```bash
+# 获取 API Server 地址
+APISERVER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+
+# 获取认证 Token
+TOKEN=$(kubectl get secret $(kubectl get sa default -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' | base64 --decode)
+
+# 调用 API 创建 Deployment
+curl -k -X POST "$APISERVER/apis/apps/v1/namespaces/default/deployments" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+      "name": "nginx-deployment",
+      "namespace": "default",
+      "labels": {
+        "app": "nginx"
+      }
+    },
+    "spec": {
+      "replicas": 3,
+      "selector": {
+        "matchLabels": {
+          "app": "nginx"
+        }
+      },
+      "template": {
+        "metadata": {
+          "labels": {
+            "app": "nginx"
+          }
+        },
+        "spec": {
+          "containers": [
+            {
+              "name": "nginx",
+              "image": "nginx:1.21",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "resources": {
+                "requests": {
+                  "cpu": "100m",
+                  "memory": "128Mi"
+                },
+                "limits": {
+                  "cpu": "500m",
+                  "memory": "512Mi"
+                }
+              },
+              "livenessProbe": {
+                "httpGet": {
+                  "path": "/",
+                  "port": 80
+                },
+                "initialDelaySeconds": 30,
+                "periodSeconds": 10
+              },
+              "readinessProbe": {
+                "httpGet": {
+                  "path": "/",
+                  "port": 80
+                },
+                "initialDelaySeconds": 5,
+                "periodSeconds": 5
+              }
+            }
+          ]
+        }
+      }
+    }
+  }'
+```
+
+**响应示例**:
+
+```json
+{
+  "kind": "Deployment",
+  "apiVersion": "apps/v1",
+  "metadata": {
+    "name": "nginx-deployment",
+    "namespace": "default",
+    "uid": "12345678-1234-1234-1234-123456789012",
+    "resourceVersion": "123456",
+    "generation": 1,
+    "creationTimestamp": "2026-01-07T10:00:00Z",
+    "labels": {
+      "app": "nginx"
+    }
+  },
+  "spec": {
+    "replicas": 3,
+    "selector": {
+      "matchLabels": {
+        "app": "nginx"
+      }
+    }
+  },
+  "status": {
+    "observedGeneration": 1,
+    "replicas": 3,
+    "updatedReplicas": 3,
+    "readyReplicas": 0,
+    "availableReplicas": 0,
+    "unavailableReplicas": 3
+  }
+}
+```
+
+---
+
+### 方式 3: 使用 kubectl 命令行（快速创建）
 
 ```bash
 # 创建基础 Deployment
@@ -157,7 +279,7 @@ kubectl set resources deployment nginx-deployment \
 
 ---
 
-### 方式 3: 使用 Python Kubernetes Client
+### 方式 4: 使用 Python Kubernetes Client
 
 ```python
 from kubernetes import client, config
@@ -225,7 +347,7 @@ print(f"Replicas: {response.spec.replicas}")
 
 ---
 
-### 方式 4: 使用 Go Kubernetes Client
+### 方式 5: 使用 Go Kubernetes Client
 
 ```go
 package main

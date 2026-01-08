@@ -76,6 +76,40 @@
 
 #### Step 2: 调用 CreateCluster API
 
+**使用 cURL (HTTP 直接调用)**:
+
+```bash
+# 准备签名和请求头（需要腾讯云 API 签名算法）
+# 示例使用 tccli 生成签名后的完整请求
+
+curl -X POST "https://tke.tencentcloudapi.com/" \
+  -H "Content-Type: application/json" \
+  -H "X-TC-Action: CreateCluster" \
+  -H "X-TC-Version: 2018-05-25" \
+  -H "X-TC-Region: ap-guangzhou" \
+  -H "X-TC-Timestamp: $(date +%s)" \
+  -H "X-TC-Language: zh-CN" \
+  -H "Authorization: TC3-HMAC-SHA256 Credential=<SecretId>/..." \
+  -d '{
+    "ClusterType": "MANAGED_CLUSTER",
+    "ClusterBasicSettings": {
+      "ClusterName": "my-tke-cluster",
+      "ClusterVersion": "1.28.3",
+      "VpcId": "vpc-xxxxxxxx",
+      "ClusterLevel": "L5"
+    },
+    "ClusterCIDRSettings": {
+      "ClusterCIDR": "172.16.0.0/16",
+      "MaxNodePodNum": 64,
+      "ServiceCIDR": "10.96.0.0/16",
+      "VpcId": "vpc-xxxxxxxx",
+      "CniType": "vpc-cni"
+    }
+  }'
+```
+
+**注意**: 腾讯云 API 需要 TC3-HMAC-SHA256 签名算法,建议使用 SDK 或 tccli 工具简化调用。签名算法详见: https://cloud.tencent.com/document/api/457/31853
+
 **使用腾讯云 CLI (tccli)**:
 
 ```bash
